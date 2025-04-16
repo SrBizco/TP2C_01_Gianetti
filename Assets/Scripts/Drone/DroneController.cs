@@ -32,26 +32,26 @@ public class DroneController : MonoBehaviour
 
     void MoveDrone()
     {
-        float horizontal = Input.GetAxis("Horizontal"); // A/D
-        float vertical = Input.GetAxis("Vertical");     // W/S
+        float horizontal = Input.GetAxis("Horizontal");
+        float vertical = Input.GetAxis("Vertical");    
 
         Vector3 moveInput = transform.forward * vertical + transform.right * horizontal;
 
-        // Aplicamos fuerza horizontal solo si no superamos la velocidad máxima
+        
         Vector3 horizontalVelocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
         if (horizontalVelocity.magnitude < maxSpeed || Vector3.Dot(horizontalVelocity, moveInput) < 0)
         {
             rb.AddForce(moveInput.normalized * moveForce, ForceMode.Force);
         }
 
-        // Fuerza vertical
+        
         float yInput = 0f;
         if (Input.GetKey(KeyCode.Space)) yInput = 1f;
         else if (Input.GetKey(KeyCode.LeftControl)) yInput = -1f;
 
         Vector3 verticalForceVector = Vector3.up * yInput * verticalForce;
 
-        // Aplicamos fuerza vertical solo si no superamos la velocidad máxima vertical
+        
         if (Mathf.Abs(rb.velocity.y) < maxSpeed || Mathf.Sign(rb.velocity.y) != Mathf.Sign(yInput))
         {
             rb.AddForce(verticalForceVector, ForceMode.Force);

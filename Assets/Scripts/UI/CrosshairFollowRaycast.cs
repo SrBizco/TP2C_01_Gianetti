@@ -4,9 +4,10 @@ using UnityEngine.UI;
 public class CrosshairFollowRaycast : MonoBehaviour
 {
     [SerializeField] private Camera cam;
-    [SerializeField] private Transform shootOrigin;       
-    [SerializeField] private Image crosshairImage;       
-    [SerializeField] private float maxDistance = 100f;       
+    [SerializeField] private Transform shootOrigin;
+    [SerializeField] private Image crosshairImage;
+    [SerializeField] private float maxDistance = 100f;
+    [SerializeField] private LayerMask targetLayers;
 
     void Update()
     {
@@ -15,7 +16,8 @@ public class CrosshairFollowRaycast : MonoBehaviour
 
         Vector3 targetPoint;
 
-        if (Physics.Raycast(ray, out hit, maxDistance))
+        
+        if (Physics.Raycast(ray, out hit, maxDistance, targetLayers))
         {
             targetPoint = hit.point;
         }
@@ -24,10 +26,7 @@ public class CrosshairFollowRaycast : MonoBehaviour
             targetPoint = ray.GetPoint(maxDistance);
         }
 
-       
         Vector3 screenPos = cam.WorldToScreenPoint(targetPoint);
-
-       
         crosshairImage.transform.position = screenPos;
     }
 }

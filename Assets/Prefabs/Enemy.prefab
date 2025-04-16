@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5523663866240565962}
   - component: {fileID: 1892646917527546695}
   - component: {fileID: 5767389450828683703}
-  m_Layer: 3
+  m_Layer: 8
   m_Name: Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -162,6 +162,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 7
   damageOnHit: 25
+  player: {fileID: 0}
+  rb: {fileID: 0}
   playerLayer:
     serializedVersion: 2
     m_Bits: 64
