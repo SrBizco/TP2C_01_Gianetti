@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/RacingCity.unity
+    guid: a70584898fd5452eb2d067b9ce158406
   m_configObjects: {}

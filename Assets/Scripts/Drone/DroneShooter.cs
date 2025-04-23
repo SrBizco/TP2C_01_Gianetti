@@ -57,7 +57,7 @@ public class DroneShooter : MonoBehaviour
             var enemy = hit.collider.GetComponent<EnemyHealth>();
             if (enemy != null)
             {
-                enemy.TakeDamage(laserDamage); // Aplica el daño
+                enemy.TakeDamage(laserDamage);
             }
 
             
