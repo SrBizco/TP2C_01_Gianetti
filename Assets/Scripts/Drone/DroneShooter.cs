@@ -33,8 +33,10 @@ public class DroneShooter : MonoBehaviour
 
     private void Shoot()
     {
-        if (laserActive) ShootLaser();
-        else ShootProjectile();
+        if (laserActive)
+            ShootLaser();
+        else
+            ShootProjectile();
     }
 
     private void ShootLaser()
@@ -46,25 +48,18 @@ public class DroneShooter : MonoBehaviour
 
         foreach (var hit in hits)
         {
-            
+           
             if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Projectile"))
                 continue;
 
-            
             end = hit.point;
 
             
-            var enemy = hit.collider.GetComponent<EnemyHealth>();
-            if (enemy != null)
+            IDamageable target = hit.collider.GetComponent<IDamageable>();
+            if (target != null)
             {
-                enemy.TakeDamage(laserDamage);
-            }
-
-            
-            var civilian = hit.collider.GetComponent<CivilianFSM>();
-            if (civilian != null)
-            {
-                civilian.Die();
+                target.TakeDamage(laserDamage);
+                break;
             }
         }
 
@@ -83,7 +78,6 @@ public class DroneShooter : MonoBehaviour
 
     private void ShootProjectile()
     {
-        
         Ray ray = new Ray(firePoint.position, firePoint.forward);
         RaycastHit hit;
         Vector3 target = firePoint.position + firePoint.forward * fireRange;
@@ -91,14 +85,12 @@ public class DroneShooter : MonoBehaviour
         if (Physics.Raycast(ray, out hit, fireRange, hitLayers))
             target = hit.point;
 
-        
         GameObject projGO = projectilePool.GetProjectileFromPool();
         projGO.transform.position = firePoint.position;
         projGO.transform.rotation = Quaternion.identity;
 
-        
         var proj = projGO.GetComponent<Projectile>();
         if (proj != null)
-            proj.Launch(projectilePool, target, projectileSpeed, projectileDamage); 
+            proj.Launch(projectilePool, target, projectileSpeed, projectileDamage);
     }
 }

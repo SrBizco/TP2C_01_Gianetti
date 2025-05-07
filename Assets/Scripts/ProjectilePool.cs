@@ -10,38 +10,37 @@ public class ProjectilePool : MonoBehaviour
 
     void Awake()
     {
-        int playerLayer = LayerMask.NameToLayer("Player");
-        int projectileLayer = LayerMask.NameToLayer("Projectile");
-        Physics.IgnoreLayerCollision(playerLayer, projectileLayer, true);
-        
-        pool = new List<GameObject>(poolSize);
+        DontDestroyOnLoad(gameObject);
+
+        pool = new List<GameObject>();
+
         for (int i = 0; i < poolSize; i++)
         {
-            var p = Instantiate(projectilePrefab);
-            p.SetActive(false);
-            pool.Add(p);
+            GameObject proj = Instantiate(projectilePrefab, transform);
+            proj.SetActive(false);
+            pool.Add(proj);
         }
     }
 
     public GameObject GetProjectileFromPool()
     {
-        foreach (var p in pool)
+        foreach (GameObject proj in pool)
         {
-            if (!p.activeInHierarchy)
+            if (!proj.activeInHierarchy)
             {
-                p.SetActive(true);
-                return p;
+                proj.SetActive(true);
+                return proj;
             }
         }
-        
-        var newP = Instantiate(projectilePrefab);
-        newP.SetActive(true);
-        pool.Add(newP);
-        return newP;
+
+        GameObject newProj = Instantiate(projectilePrefab, transform);
+        newProj.SetActive(true);
+        pool.Add(newProj);
+        return newProj;
     }
 
-    public void ReturnProjectileToPool(GameObject projectile)
+    public void ReturnProjectileToPool(GameObject proj)
     {
-        projectile.SetActive(false);
+        proj.SetActive(false);
     }
 }

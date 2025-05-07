@@ -1,13 +1,11 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class DroneHealth : MonoBehaviour
+public class DroneHealth : Entity
 {
-    [SerializeField] private float maxHealth = 100f;
     [SerializeField] private float minImpactVelocity = 5f;
     [SerializeField] private LayerMask ignoredImpactLayers;
 
-    private float currentHealth;
     public float CurrentHealth => currentHealth;
     public float MaxHealth => maxHealth;
 
@@ -18,7 +16,6 @@ public class DroneHealth : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        
         if (((1 << collision.gameObject.layer) & ignoredImpactLayers) != 0)
             return;
 
@@ -31,18 +28,7 @@ public class DroneHealth : MonoBehaviour
         }
     }
 
-    public void TakeDamage(float amount)
-    {
-        currentHealth -= amount;
-        Debug.Log($"Drone recibió daño: {amount}. Vida restante: {currentHealth}");
-
-        if (currentHealth <= 0)
-        {
-            Die();
-        }
-    }
-
-    private void Die()
+    public override void Die()
     {
         Debug.Log("El dron ha sido destruido.");
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);

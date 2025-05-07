@@ -10,11 +10,13 @@ public class EnemyPool : MonoBehaviour
 
     void Awake()
     {
+        DontDestroyOnLoad(gameObject); 
+
         pool = new List<GameObject>();
 
         for (int i = 0; i < poolSize; i++)
         {
-            GameObject enemy = Instantiate(enemyPrefab);
+            GameObject enemy = Instantiate(enemyPrefab, transform);
             enemy.SetActive(false);
             pool.Add(enemy);
         }
@@ -31,8 +33,7 @@ public class EnemyPool : MonoBehaviour
             }
         }
 
-        
-        GameObject newEnemy = Instantiate(enemyPrefab);
+        GameObject newEnemy = Instantiate(enemyPrefab, transform);
         newEnemy.SetActive(true);
         pool.Add(newEnemy);
         return newEnemy;

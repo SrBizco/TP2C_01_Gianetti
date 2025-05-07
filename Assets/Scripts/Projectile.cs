@@ -6,6 +6,7 @@ public class Projectile : MonoBehaviour
     [Header("Capas")]
     [Tooltip("Capa(s) que el proyectil debe dañar (por ejemplo, Enemy)")]
     [SerializeField] private LayerMask damageLayers;
+
     [Tooltip("Capa(s) que el proyectil debe IGNORAR (por ejemplo, Player)")]
     [SerializeField] private LayerMask ignoreLayers;
 
@@ -41,23 +42,15 @@ public class Projectile : MonoBehaviour
     {
         int layer = other.gameObject.layer;
 
-        
         if (((1 << layer) & ignoreLayers) != 0)
             return;
 
-        
         if (((1 << layer) & damageLayers) != 0)
-        {       
-            var enemy = other.GetComponent<EnemyHealth>();
-            if (enemy != null)
+        {
+            IDamageable damageable = other.GetComponent<IDamageable>();
+            if (damageable != null)
             {
-                enemy.TakeDamage(projectileDamage);
-            }
-            
-            var civilian = other.GetComponent<CivilianFSM>();
-            if (civilian != null)
-            {
-                civilian.Die(); 
+                damageable.TakeDamage(projectileDamage);
             }
         }
 

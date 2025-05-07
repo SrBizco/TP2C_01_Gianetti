@@ -1,11 +1,9 @@
 using UnityEngine;
 
-public class EnemyHealth : MonoBehaviour
+public class EnemyHealth : Entity
 {
-    [SerializeField] private float maxHealth = 100f;
-    private float currentHealth;
     private EnemyPool pool;
-    private GameManager gameManager; 
+    private GameManager gameManager;
 
     public void Initialize(EnemyPool objectPool)
     {
@@ -16,25 +14,14 @@ public class EnemyHealth : MonoBehaviour
     {
         currentHealth = maxHealth;
 
-       
         if (gameManager == null)
         {
             gameManager = FindObjectOfType<GameManager>();
         }
     }
 
-    public void TakeDamage(float amount)
+    public override void Die()
     {
-        currentHealth -= amount;
-        if (currentHealth <= 0)
-        {
-            Die();
-        }
-    }
-
-    void Die()
-    {
-        
         if (gameManager != null)
         {
             gameManager.IncreaseScore();
