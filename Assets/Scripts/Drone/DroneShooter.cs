@@ -22,11 +22,11 @@ public class DroneShooter : MonoBehaviour
 
     void Update()
     {
-        
+        if (GameManager.Instance != null && GameManager.Instance.IsPaused()) return;
+
         if (Input.GetKeyDown(KeyCode.L))
             laserActive = !laserActive;
 
-        
         if (Input.GetMouseButtonDown(0))
             Shoot();
     }
@@ -48,13 +48,11 @@ public class DroneShooter : MonoBehaviour
 
         foreach (var hit in hits)
         {
-           
             if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Projectile"))
                 continue;
 
             end = hit.point;
 
-            
             IDamageable target = hit.collider.GetComponent<IDamageable>();
             if (target != null)
             {

@@ -31,6 +31,6 @@ public class DroneHealth : Entity
     public override void Die()
     {
         Debug.Log("El dron ha sido destruido.");
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        GameManager.Instance.PlayerDied();
     }
 }

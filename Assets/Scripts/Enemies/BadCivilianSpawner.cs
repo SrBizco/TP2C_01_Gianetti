@@ -34,5 +34,11 @@ public class BadCivilianSpawner : MonoBehaviour
 
         if (agent != null) agent.enabled = true;
         civilian.SetActive(true);
+
+        // ✅ Registrar en el GameManager
+        if (civilian.TryGetComponent<CivilianFSM>(out var fsm) && fsm.civilianType == CivilianType.Bad)
+        {
+            GameManager.Instance?.RegisterBadCivilian();
+        }
     }
 }

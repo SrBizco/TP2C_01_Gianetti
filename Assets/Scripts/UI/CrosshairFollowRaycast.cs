@@ -11,12 +11,13 @@ public class CrosshairFollowRaycast : MonoBehaviour
 
     void Update()
     {
+        if (GameManager.Instance != null && GameManager.Instance.IsPaused()) return;
+
         Ray ray = new Ray(shootOrigin.position, shootOrigin.forward);
         RaycastHit hit;
 
         Vector3 targetPoint;
 
-        
         if (Physics.Raycast(ray, out hit, maxDistance, targetLayers))
         {
             targetPoint = hit.point;
